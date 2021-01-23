@@ -1,4 +1,4 @@
-@import '~semantic-ui-css/semantic.min.css';
+@import "~semantic-ui-css/semantic.min.css";
 
 body {
   margin: 0;
@@ -7,9 +7,19 @@ body {
 }
 
 .modals {
-  overflow-y: auto!important;
+  overflow-y: auto !important;
 }
 
 .message {
   word-break: break-all;
+}
+
+.path__message {
+  display: flex;
+  flex-direction: flex;
+  justify-content: space-between;
+}
+
+.path__deleteIcon:hover {
+  cursor: pointer;
 }
