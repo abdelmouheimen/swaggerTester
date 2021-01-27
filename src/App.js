@@ -104,7 +104,7 @@ class App extends Component {
 
   addScenario() {
     const scenaris = this.state.scenaris;
-    const id = scenaris.length + 1;
+    const id = scenaris.length == 0 ? 1 : scenaris[scenaris.length - 1].id + 1;
     const newScenario = {
       specUrl: this.state.specUrl,
       name: "Scenario #" + id,
@@ -116,17 +116,21 @@ class App extends Component {
     this.setCurrentScenarioTo(newScenario);
   }
 
-  removeScenario(scenario) {
+  removeScenario(e, scenario) {
+    e.stopPropagation();
     const scenaris = this.state.scenaris;
-    const newSceanris = scenaris
-      .map((scenar) => {
-        if (scenar.id === scenario.id) {
-          return undefined;
-        }
-        return scenar;
-      })
-      .filter((scenar) => scenar !== undefined);
+    const index = scenaris.findIndex(
+      (scena) => scena.id === scenario.id
+    );
+
+    const newSceanris = scenaris;
+    if (index >= 0) {
+      newSceanris.splice(index, 1);
+    } else {
+      console.warn(`cannot remove element ${scenario.id}`);
+    }
     this.setState({ scenaris: newSceanris });
+    this.setCurrentScenarioTo(newSceanris[0]);
   }
 
   setCurrentScenarioTo(scenario) {
@@ -373,7 +377,7 @@ class App extends Component {
                         {scenario.name}{" "}
                         <Icon
                           name="trash"
-                          onClick={() => this.removeScenario(scenario)}
+                          onClick={(e) => this.removeScenario(e, scenario)}
                         />
                       </Menu.Item>
                     ))}
