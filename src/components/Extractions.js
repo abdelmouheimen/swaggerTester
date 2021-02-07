@@ -26,14 +26,14 @@ class Extractions extends Component {
     const extractions = this.state.extractions
     const newExtracts = extractions.map(a => {
       if (a.id === extraction.id) {
-        return {...extraction, ...parts}
+        return { ...extraction, ...parts }
       }
       return a
     })
 
     this.props.onChange(newExtracts)
 
-    this.setState({extractions: newExtracts})
+    this.setState({ extractions: newExtracts })
   }
 
   removeExtraction(extraction) {
@@ -47,7 +47,7 @@ class Extractions extends Component {
 
     this.props.onChange(newExtracts)
 
-    this.setState({extractions: newExtracts})
+    this.setState({ extractions: newExtracts })
   }
 
   render() {
@@ -55,20 +55,20 @@ class Extractions extends Component {
 
     const Extract = (props) => <Table.Row>
       <Table.Cell>
-        <select value={props.extract.on} onChange={(e) => this.updateExtraction(props.extract, {on: e.target.value})}>
+        <select value={props.extract.on} onChange={(e) => this.updateExtraction(props.extract, { on: e.target.value })}>
           <option value='headers'>headers</option>
           <option value='status'>status code</option>
           <option value='body'>body</option>
         </select>
       </Table.Cell>
       <Table.Cell>
-        {props.extract.on !== 'status' && <Input fluid value={props.extract.value} onBlur={(e) => this.updateExtraction(props.extract, {value: e.target.value})} />}
+        {props.extract.on !== 'status' && <Input fluid value={props.extract.value} onBlur={(e) => this.updateExtraction(props.extract, { value: e.target.value })} />}
       </Table.Cell>
       <Table.Cell>
-        <Input icon='dollar' iconPosition='left' fluid value={props.extract.as} onBlur={(e) => this.updateExtraction(props.extract, {as: e.target.value})} />
+        <Input icon='dollar' iconPosition='left' fluid value={props.extract.as} onBlur={(e) => this.updateExtraction(props.extract, { as: e.target.value })} />
       </Table.Cell>
       <Table.Cell>
-        <Button icon='trash' onClick={() => this.removeExtraction(props.extract)}/>
+        <Button icon='trash' onClick={() => this.removeExtraction(props.extract)} />
       </Table.Cell>
     </Table.Row>
 
@@ -86,7 +86,7 @@ class Extractions extends Component {
           </Table.Header>
 
           <Table.Body>
-            { extractions.map((e,i) => <Extract key={i} extract={e} />) }
+            {extractions.map((e, i) => <Extract key={i} extract={e} />)}
           </Table.Body>
         </Table>
       </div>

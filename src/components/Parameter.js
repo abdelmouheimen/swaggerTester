@@ -11,7 +11,7 @@ class Parameter extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const { spec, onChange, value, body } = this.props
 
     if (!value) {
@@ -21,8 +21,9 @@ class Parameter extends Component {
         onChange(spec.example || this.getExampleValueForType(spec.type, spec.format))
       }
     }
+    this.setState({ val: value || spec.example || this.getExampleValueForType(spec.type, spec.format) })
   }
-  
+
 
   bodyAsJson(properties) {
     return '{\n' + Object.keys(properties).map(key => {
@@ -40,8 +41,7 @@ class Parameter extends Component {
         }
       }
 
-      return `\t"${key}": ${
-        (properties[key].example && properties[key].type === 'string' ? '"' + properties[key].example + '"' : properties[key].example) ||
+      return `\t"${key}": ${(properties[key].example && properties[key].type === 'string' ? '"' + properties[key].example + '"' : properties[key].example) ||
         computedExample}`
     }).join(',\n') +
       '\n}'
@@ -114,10 +114,10 @@ class Parameter extends Component {
     return (
       <Table.Row>
         <Table.Cell>{spec.name || (body && 'body')}</Table.Cell>
-        <Table.Cell>{spec.in  || (body && 'body')}</Table.Cell>
+        <Table.Cell>{spec.in || (body && 'body')}</Table.Cell>
         <Table.Cell>
-          {body && <TextArea onChange={(e) => this.setState({val: e.target.value})} onBlur={(e) => onChange(e.target.value)} value={this.state.val || value || this.bodyAsJson(spec.schema.properties)} autoHeight style={{ width: '100%' }} />}
-          {!body && <Input onChange={(e) => this.setState({val: e.target.value})} onBlur={(e) => onChange(e.target.value)} type={this.getTypeAsHtml(spec.type, spec.format)} value={this.state.val || value || spec.example || this.getExampleValueForType(spec.type, spec.format)} fluid />}
+          {body && <TextArea onChange={(e) => this.setState({ val: e.target.value })} onBlur={(e) => onChange(e.target.value)} value={this.state.val || value || this.bodyAsJson(spec.schema.properties)} autoHeight style={{ width: '100%' }} />}
+          {!body && <Input onChange={(e) => this.setState({ val: e.target.value })} onBlur={(e) => onChange(e.target.value)} type={this.getTypeAsHtml(spec.type, spec.format)} value={this.state.val || ""} fluid />}
         </Table.Cell>
       </Table.Row>
     )
